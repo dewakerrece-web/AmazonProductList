@@ -16,7 +16,7 @@ public class AmazonHomePage {
     }
 
     public void searchProduct(String brandName) {
-        driver.findElement(searchBox).clear();
+        driver.findElement(searchBox).clear(); //locators
         driver.findElement(searchBox).sendKeys(brandName);
         driver.findElement(searchBox).sendKeys(Keys.ENTER);
     }
