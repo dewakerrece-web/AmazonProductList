@@ -6,3 +6,6 @@ target/
 .settings/
 .project
 .classpath
+screenshots/*.png
+output/*.xlsx
+reports/*.txt

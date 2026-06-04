@@ -45,9 +45,14 @@ public class ExcelUtility {
 
     public void writeResult(String sheetName, List<String[]> data) {
         try {
-            FileInputStream fis = new FileInputStream(filePath);
-            Workbook workbook = WorkbookFactory.create(fis);
-            fis.close();
+            Workbook workbook;
+            if (new java.io.File(filePath).exists()) {
+                FileInputStream fis = new FileInputStream(filePath);
+                workbook = WorkbookFactory.create(fis);
+                fis.close();
+            } else {
+                workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+            }
 
             Sheet sheet = workbook.getSheet(sheetName);
             if (sheet == null) {
