@@ -1,47 +1,25 @@
 package base;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-
+import config.ConfigManager;
+import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
 
-    public WebDriver driver;
+    protected WebDriver driver;
 
-    public void setup() {
-        try {
-            Properties config = new Properties();
-            FileInputStream fis = new FileInputStream("src/test/resources/config.properties");
-            config.load(fis);
-            fis.close();
-
-            String url = config.getProperty("url");
-            String browser = config.getProperty("browser");
-
-            if (browser.equalsIgnoreCase("chrome")) {
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--start-maximized");
-                driver = new ChromeDriver(options);
-            }
-
-            driver.get(url);
-            System.out.println("Browser opened. Navigated to: " + url);
-
-        } catch (Exception e) {
-            System.out.println("Error in setup: " + e.getMessage());
-        }
+    @BeforeMethod
+    public void setUp() {
+        driver = DriverManager.createDriver();
+        driver.get(ConfigManager.getInstance().getUrl());
+        System.out.println("Browser opened. Navigated to: " + ConfigManager.getInstance().getUrl());
     }
 
+    @AfterMethod
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-            System.out.println("Browser closed.");
-        }
+        DriverManager.quitDriver();
+        System.out.println("Browser closed.");
     }
 }

@@ -1,51 +1,28 @@
 package tests;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import com.google.common.io.Files;
-
 import base.BaseTest;
+import constants.FrameworkConstants;
 import pages.AmazonHomePage;
 import pages.AmazonSearchResultPage;
 import utils.ExcelUtility;
+import utils.ReportUtility;
+import utils.ScreenshotUtility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AmazonSearchTest extends BaseTest {
 
-    AmazonHomePage homePage;
-    AmazonSearchResultPage searchResultPage;
-    List<String[]> resultsData = new ArrayList<>();
-
-    String inputFile = "input/InputData.xlsx";
-    String outputFile = "output/OutputData.xlsx";
-    String screenshotFolder = "screenshots";
-    String reportFolder = "reports";
-
-    @BeforeClass
-    public void startMessage() {
-        System.out.println("========== AMAZON PRODUCT SEARCH STARTED ==========");
-    }
-
-    @Test
+    @org.testng.annotations.Test
     public void searchAllProducts() {
+        AmazonHomePage homePage;
+        AmazonSearchResultPage searchResultPage;
+        List<String[]> resultsData = new ArrayList<>();
 
-        setup();
-
-        ExcelUtility excel = new ExcelUtility(inputFile);
-        List<Object[]> brandData = excel.readBrandData("Sheet1");
+        ExcelUtility excel = new ExcelUtility(FrameworkConstants.INPUT_FILE);
+        List<Object[]> brandData = excel.readBrandData(FrameworkConstants.EXCEL_SHEET_NAME);
 
         for (int i = 0; i < brandData.size(); i++) {
-
             String brandName = (String) brandData.get(i)[0];
             double expectedPrice = (double) brandData.get(i)[1];
 
@@ -59,7 +36,6 @@ public class AmazonSearchTest extends BaseTest {
             String screenshotPath = "";
 
             try {
-
                 homePage = new AmazonHomePage(driver);
                 if (homePage.isSearchBoxDisplayed()) {
                     System.out.println("Amazon home page loaded successfully.");
@@ -79,13 +55,13 @@ public class AmazonSearchTest extends BaseTest {
                 System.out.println("Product found: " + productName);
                 System.out.println("Price on Amazon: " + actualPrice);
 
-                screenshotPath = takeScreenshot(brandName);
-                if (!screenshotPath.equals("")) {
+                screenshotPath = ScreenshotUtility.captureScreenshot(driver, brandName);
+                if (!screenshotPath.isEmpty()) {
                     System.out.println("Screenshot saved: " + screenshotPath);
                 }
 
                 String actualPriceDigits = actualPrice.replaceAll("[^0-9]", "");
-                if (!actualPriceDigits.equals("") && expectedPrice > 0) {
+                if (!actualPriceDigits.isEmpty() && expectedPrice > 0) {
                     double actualPriceValue = Double.parseDouble(actualPriceDigits);
                     double difference = Math.abs(actualPriceValue - expectedPrice);
                     double percentDiff = (difference / expectedPrice) * 100;
@@ -94,84 +70,35 @@ public class AmazonSearchTest extends BaseTest {
                     System.out.println("Actual: Rupees " + (int) actualPriceValue);
                     System.out.println("Difference: " + String.format("%.1f", percentDiff) + "%");
 
-                    if (percentDiff <= 20) {
-                        status = "PASS";
-                    } else {
-                        status = "FAIL";
-                    }
+                    status = (percentDiff <= FrameworkConstants.PRICE_TOLERANCE_PERCENT) ? "PASS" : "FAIL";
                 } else {
                     status = "PASS";
                 }
 
             } catch (Exception e) {
                 System.out.println("Error for " + brandName + ": " + e.getMessage());
-                screenshotPath = takeScreenshot(brandName + "_FAIL");
+                ScreenshotUtility.captureScreenshot(driver, brandName + "_FAIL");
                 status = "FAIL";
             }
 
             System.out.println("Status: " + status);
-            resultsData.add(new String[] { brandName, productName, String.valueOf((int) expectedPrice), actualPrice, status });
+            resultsData.add(new String[]{
+                    brandName, productName, String.valueOf((int) expectedPrice), actualPrice, status
+            });
         }
 
-        tearDown();
+        writeOutput(resultsData);
     }
 
-    public String takeScreenshot(String brandName) {
+    private void writeOutput(List<String[]> resultsData) {
         try {
-            File screenshotFolderObj = new File(screenshotFolder);
-            if (!screenshotFolderObj.exists()) {
-                screenshotFolderObj.mkdirs();
-            }
-            File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String filePath = screenshotFolder + "/" + brandName + ".png";
-            Files.copy(sourceFile, new File(filePath));
-            return filePath;
-        } catch (Exception e) {
-            System.out.println("Screenshot error: " + e.getMessage());
-            return "";
-        }
-    }
-
-    @AfterClass
-    public void finishExecution() {
-
-        try {
-            ExcelUtility excel = new ExcelUtility(outputFile);
-            excel.writeResult("Sheet1", resultsData);
-            System.out.println("Results written to: " + outputFile);
+            ExcelUtility excel = new ExcelUtility(FrameworkConstants.OUTPUT_FILE);
+            excel.writeResult(FrameworkConstants.EXCEL_SHEET_NAME, resultsData);
+            System.out.println("Results written to: " + FrameworkConstants.OUTPUT_FILE);
         } catch (Exception e) {
             System.out.println("Error writing Excel output: " + e.getMessage());
         }
 
-        try {
-            File reportFolderObj = new File(reportFolder);
-            if (!reportFolderObj.exists()) {
-                reportFolderObj.mkdirs();
-            }
-
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String reportPath = reportFolder + "/ExecutionReport_" + timestamp + ".txt";
-            FileWriter writer = new FileWriter(reportPath);
-
-            writer.write("AMAZON AUTOMATION EXECUTION REPORT\n");
-            writer.write("Generated: " + new Date().toString() + "\n\n");
-
-            for (String[] row : resultsData) {
-                writer.write("========================================\n");
-                writer.write("Brand Name      : " + row[0] + "\n");
-                writer.write("Product Name    : " + row[1] + "\n");
-                writer.write("Expected Price  : " + row[2] + "\n");
-                writer.write("Actual Price    : " + row[3] + "\n");
-                writer.write("Status          : " + row[4] + "\n");
-                writer.write("========================================\n\n");
-            }
-
-            writer.close();
-            System.out.println("Report saved: " + reportPath);
-        } catch (Exception e) {
-            System.out.println("Error writing report: " + e.getMessage());
-        }
-
-        System.out.println("========== AMAZON PRODUCT SEARCH COMPLETED ==========");
+        ReportUtility.generateExecutionReport(resultsData);
     }
 }

@@ -1,0 +1,83 @@
+AMAZON AUTOMATION EXECUTION REPORT
+Generated: Thu Jun 04 13:22:22 IST 2026
+
+========================================
+Brand Name      : Voltas 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 42000
+Actual Price    : Rupees 33,990
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : LG 1.5 Ton 5 Star
+Product Name    : LG
+Expected Price  : 45000
+Actual Price    : Rupees 48,490
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Samsung 1.5 Ton 5 Star
+Product Name    : Samsung
+Expected Price  : 44000
+Actual Price    : Rupees 39,900
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Daikin 1.5 Ton 5 Star
+Product Name    : Samsung
+Expected Price  : 46000
+Actual Price    : Rupees 39,900
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Blue Star 1.5 Ton 5 Star
+Product Name    : Uniboom
+Expected Price  : 43000
+Actual Price    : Rupees 29,990
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Hitachi 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 48000
+Actual Price    : Rupees 33,990
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Panasonic 1.5 Ton 5 Star
+Product Name    : Panasonic
+Expected Price  : 44000
+Actual Price    : Rupees 61,989
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Mitsubishi 1.5 Ton 5 Star
+Product Name    : Samsung 1.5Ton 3Star,New Star rated, Bespoke AI WindFree Inverter Smart Split AC (WiFi, Energy Saving, Voice Control, Powerful Cooling, Copper, Digital Inverter, white,AR60H18D1LWNNA)
+Expected Price  : 55000
+Actual Price    : Rupees 39,900
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Carrier 1.5 Ton 5 Star
+Product Name    : Carrier
+Expected Price  : 42000
+Actual Price    : Price not available
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Lloyd 1.5 Ton 5 Star
+Product Name    : Samsung
+Expected Price  : 38000
+Actual Price    : Rupees 39,900
+Status          : PASS
+========================================
+

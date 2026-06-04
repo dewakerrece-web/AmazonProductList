@@ -1,0 +1,83 @@
+AMAZON AUTOMATION EXECUTION REPORT
+Generated: Thu Jun 04 13:29:36 IST 2026
+
+========================================
+Brand Name      : Voltas 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 42000
+Actual Price    : Rupees 33,990
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : LG 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 45000
+Actual Price    : Rupees 33,990
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Samsung 1.5 Ton 5 Star
+Product Name    : Samsung
+Expected Price  : 44000
+Actual Price    : Rupees 48,490
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Daikin 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 46000
+Actual Price    : Rupees 33,990
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Blue Star 1.5 Ton 5 Star
+Product Name    : Uniboom
+Expected Price  : 43000
+Actual Price    : Rupees 29,990
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Hitachi 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 48000
+Actual Price    : Rupees 33,990
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Panasonic 1.5 Ton 5 Star
+Product Name    : Panasonic
+Expected Price  : 44000
+Actual Price    : Rupees 61,989
+Status          : FAIL
+========================================
+
+========================================
+Brand Name      : Mitsubishi 1.5 Ton 5 Star
+Product Name    : Panasonic 2.0 Ton 4 Star New Star rated Premium WiFi Inverter Smart Split AC (DustBuster Tech,Matter Enabled,AI,Higher Airflow, Copper Cond., 8in1 Convertible,4-Way,PM0.1 Filter,CS/CU-NU24BKY4W,White)
+Expected Price  : 55000
+Actual Price    : Rupees 61,989
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Carrier 1.5 Ton 5 Star
+Product Name    : acerpure
+Expected Price  : 42000
+Actual Price    : Rupees 33,990
+Status          : PASS
+========================================
+
+========================================
+Brand Name      : Lloyd 1.5 Ton 5 Star
+Product Name    : Panasonic
+Expected Price  : 38000
+Actual Price    : Rupees 61,989
+Status          : FAIL
+========================================
+
